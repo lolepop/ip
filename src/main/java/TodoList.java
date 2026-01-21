@@ -35,6 +35,14 @@ public class TodoList {
         return this.items.size();
     }
 
+    public Optional<Task> removeTask(int taskIndex) {
+        try {
+            return Optional.of(this.items.remove(taskIndex - 1));
+        } catch (IndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
+    }
+
     private Optional<Task> getTaskByIndex(int taskIndex) {
         return Optional.ofNullable(this.items.get(taskIndex - 1));
     }

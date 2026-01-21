@@ -6,8 +6,11 @@ list
 mark 2
 list
 unmark 2
+delete 2
+list
 todo
 bruh
 deadline /by a
 event this should fail /to qwerty
+delete 9999
 bye
