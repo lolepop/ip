@@ -1,0 +1,9 @@
+list
+todo task1
+deadline task 2 2 /by some time later    
+event task 3 /from now /to then
+list
+mark 2
+list
+unmark 2
+bye
