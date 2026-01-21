@@ -1,28 +1,5 @@
 import java.util.Scanner;
 
-class CommandTokeniser {
-    String[] parts; // raw segments of a command
-    int parsingIndex;
-
-    public CommandTokeniser(String rawCommand) {
-        this.parts = rawCommand.strip().split(" ");
-        this.parsingIndex = 0;
-    }
-
-    // nothing was passed by the user
-    public boolean isEmpty() {
-        return this.parts.length == 1 && this.parts[0].length() == 0;
-    }
-
-    public String nextString() {
-        return this.parts[parsingIndex++];
-    }
-
-    public int nextInt() {
-        return Integer.parseInt(this.nextString());
-    }
-}
-
 public class Dawg {
     public static void main(String[] args) {
         Scanner stdin = new Scanner(System.in);
@@ -32,9 +9,9 @@ public class Dawg {
         
         while (true) {
             String rawCommand = stdin.nextLine();
-            var userCommand = new CommandTokeniser(rawCommand);
-            var command = userCommand.nextString().toLowerCase();
-            if (userCommand.isEmpty()) {
+            var commandTokeniser = new CommandTokeniser(rawCommand);
+            var command = commandTokeniser.nextString().toLowerCase();
+            if (commandTokeniser.isEmpty()) {
                 continue;
             }
 
@@ -44,16 +21,34 @@ public class Dawg {
                 System.out.println("Here are the tasks in your list:");
                 System.out.println(todoList.toString());
             } else if (command.equals("mark")) {
-                var selectedIndex = userCommand.nextInt();
+                var selectedIndex = commandTokeniser.nextInt();
+                var task = todoList.markTask(selectedIndex);
                 System.out.println("Nice! I've marked this task as done:");
-                todoList.markTask(selectedIndex);
+                System.out.println(task);
             } else if (command.equals("unmark")) {
-                var selectedIndex = userCommand.nextInt();
+                var selectedIndex = commandTokeniser.nextInt();
+                var task = todoList.unmarkTask(selectedIndex);
                 System.out.println("OK, I've marked this task as not done yet:");
-                todoList.unmarkTask(selectedIndex);
+                System.out.println(task);
+            } else if (command.equals("todo") || command.equals("deadline") || command.equals("event")) {
+                var ap = new ArgParser(commandTokeniser);
+                Task added;
+                if (command.equals("todo")) {
+                    added = todoList.addTodo(ap.getUntagged());
+                } else if (command.equals("deadline")) {
+                    ap.registerArg("/by");
+                    added = todoList.addDeadline(ap.getUntagged(), ap.getArg("/by"));
+                } else {
+                    ap.registerArg("/from");
+                    ap.registerArg("/to");
+                    added = todoList.addEvent(ap.getUntagged(), ap.getArg("/from"), ap.getArg("/to"));
+                }
+                System.out.println("Got it. I've added this task:");
+                System.out.println(added);
+                System.out.println("Now you have " + todoList.length() + " tasks in the list.");
             } else {
                 todoList.addTask(rawCommand);
-                System.out.println("added: " + rawCommand + "\n");
+                System.out.println("added: " + rawCommand);
             }
         }
         

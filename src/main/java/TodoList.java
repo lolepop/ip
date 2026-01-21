@@ -12,18 +12,42 @@ public class TodoList {
         items.add(task);
     }
 
+    public Todo addTodo(String description) {
+        var todo = new Todo(description);
+        items.add(todo);
+        return todo;
+    }
+
+    public Deadline addDeadline(String description, String by) {
+        var deadline = new Deadline(description, by);
+        items.add(deadline);
+        return deadline;
+    }
+
+    public Event addEvent(String description, String from, String to) {
+        var event = new Event(description, from, to);
+        items.add(event);
+        return event;
+    }
+
+    public int length() {
+        return this.items.size();
+    }
+
     private Task getTaskByIndex(int taskIndex) {
         return this.items.get(taskIndex - 1);
     }
 
-    public void markTask(int taskIndex) {
+    public Task markTask(int taskIndex) {
         var task = this.getTaskByIndex(taskIndex);
         task.setDone(true);
+        return task;
     }
 
-    public void unmarkTask(int taskIndex) {
+    public Task unmarkTask(int taskIndex) {
         var task = this.getTaskByIndex(taskIndex);
         task.setDone(false);
+        return task;
     }
 
     @Override
@@ -33,6 +57,6 @@ public class TodoList {
             var todo = this.items.get(i - 1);
             sb.append(i + "." + todo + "\n");
         }
-        return sb.toString();
+        return sb.toString().strip();
     }
 }
