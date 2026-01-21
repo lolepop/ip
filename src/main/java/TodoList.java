@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class TodoList {
     private ArrayList<Task> items;
@@ -34,19 +35,19 @@ public class TodoList {
         return this.items.size();
     }
 
-    private Task getTaskByIndex(int taskIndex) {
-        return this.items.get(taskIndex - 1);
+    private Optional<Task> getTaskByIndex(int taskIndex) {
+        return Optional.ofNullable(this.items.get(taskIndex - 1));
     }
 
-    public Task markTask(int taskIndex) {
+    public Optional<Task> markTask(int taskIndex) {
         var task = this.getTaskByIndex(taskIndex);
-        task.setDone(true);
+        task.ifPresent(t -> t.setDone(true));
         return task;
     }
 
-    public Task unmarkTask(int taskIndex) {
+    public Optional<Task> unmarkTask(int taskIndex) {
         var task = this.getTaskByIndex(taskIndex);
-        task.setDone(false);
+        task.ifPresent(t -> t.setDone(false));
         return task;
     }
 

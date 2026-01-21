@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 
 class ArgParser {
     private CommandTokeniser tokeniser;
@@ -31,7 +32,7 @@ class ArgParser {
         String currentArg = null;
         var buffer = new StringBuffer();
         while (this.tokeniser.hasMoreTokens()) {
-            var tok = this.tokeniser.nextString();
+            var tok = this.tokeniser.nextString().get();
             if (this.args.contains(tok)) {
                 // flush buffer
                 var param = buffer.toString().strip();
@@ -62,14 +63,14 @@ class ArgParser {
         }
     }
 
-    public String getUntagged() {
+    public Optional<String> getUntagged() {
         this.parse();
-        return this.untagged;
+        return Optional.ofNullable(this.untagged);
     }
 
-    public String getArg(String arg) {
+    public Optional<String> getArg(String arg) {
         this.parse();
-        return this.parsedArgs.get(arg);
+        return Optional.ofNullable(this.parsedArgs.get(arg));
     }
 
 }
@@ -92,11 +93,11 @@ class CommandTokeniser {
         return this.parsingIndex < this.parts.length;
     }
 
-    public String nextString() {
-        return this.parts[parsingIndex++];
+    public Optional<String> nextString() {
+        return Optional.ofNullable(this.hasMoreTokens() ? this.parts[parsingIndex++] : null);
     }
 
-    public int nextInt() {
-        return Integer.parseInt(this.nextString());
+    public Optional<Integer> nextInt() {
+        return this.nextString().map(Integer::parseInt);
     }
 }
