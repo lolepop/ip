@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import storage.FileStorage;
 import task.InvalidEventDateOrder;
+import task.Task;
 
 class DawgException extends Exception {
     public DawgException(String message) {
@@ -40,8 +41,6 @@ enum Command {
 }
 
 public class Dawg {
-    private static final String PREFERRED_INPUT_DATE_FMT = "yyyy/MM/dd HH:mm";
-
     private static TodoList todoList = new TodoList(new FileStorage());
 
     // returns: if program should continue expecting further commands
@@ -93,19 +92,19 @@ public class Dawg {
                 Task added;
 
                 Function<String, Supplier<DawgException>> exceptionFactory = s -> () -> new DawgException(
-                        "expected valid date (" + Dawg.PREFERRED_INPUT_DATE_FMT + ") " + s);
+                        "expected valid date (" + task.Constants.INPUT_DATE_FORMAT + ") " + s);
                 String description = ap.getUntagged().orElseThrow(() -> new DawgException("expected description"));
 
                 if (command == Command.TODO) {
                     added = todoList.addTodo(description);
                 } else if (command == Command.DEADLINE) {
-                    var by = ap.getDateArg("/by", Dawg.PREFERRED_INPUT_DATE_FMT)
+                    var by = ap.getDateArg("/by", task.Constants.INPUT_DATE_FORMAT)
                             .orElseThrow(exceptionFactory.apply("argument /by"));
                     added = todoList.addDeadline(description, by);
                 } else {
-                    var from = ap.getDateArg("/from", Dawg.PREFERRED_INPUT_DATE_FMT)
+                    var from = ap.getDateArg("/from", task.Constants.INPUT_DATE_FORMAT)
                             .orElseThrow(exceptionFactory.apply("argument /from"));
-                    var to = ap.getDateArg("/to", Dawg.PREFERRED_INPUT_DATE_FMT)
+                    var to = ap.getDateArg("/to", task.Constants.INPUT_DATE_FORMAT)
                             .orElseThrow(exceptionFactory.apply("argument /to"));
                     try {
                         added = todoList.addEvent(description, from, to);
