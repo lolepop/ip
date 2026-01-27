@@ -1,3 +1,5 @@
+package task;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,11 +8,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import storage.Storage;
-import task.Deadline;
-import task.Event;
-import task.InvalidEventDateOrder;
-import task.Task;
-import task.Todo;
 
 public class TodoList {
     private ArrayList<Task> items;
