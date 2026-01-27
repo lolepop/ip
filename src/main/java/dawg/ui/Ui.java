@@ -9,14 +9,27 @@ public class Ui {
         this.stdin = new Scanner(System.in);
     }
 
+    /**
+     * Displays greeting message
+     */
     public void showGreeting() {
         this.displayMessage("Hello, I'm Dawg\nWhat can I do for you?");
     }
 
+    /**
+     * Get the next raw command entered by user
+     * 
+     * @return next raw command
+     */
     public String nextCommand() {
         return this.stdin.nextLine();
     }
 
+    /**
+     * Displays msg to the user
+     * 
+     * @param msg to be shown
+     */
     public void displayMessage(String msg) {
         System.out.println(msg);
     }
@@ -29,6 +42,11 @@ public class Ui {
         System.out.println("");
     }
 
+    /**
+     * Displays error message to the user
+     * 
+     * @param err error message to be shown
+     */
     public void displayError(String err) {
         System.err.println(err);
     }
