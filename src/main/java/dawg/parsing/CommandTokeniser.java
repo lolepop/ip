@@ -17,7 +17,7 @@ public class CommandTokeniser {
     }
 
     public boolean hasMoreTokens() {
-        return this.parsingIndex < this.parts.length;
+        return !this.isEmpty() && this.parsingIndex < this.parts.length;
     }
 
     public Optional<String> nextString() {

@@ -16,6 +16,7 @@ public class FileStorage implements Storage {
         this.filePath = FILE_PATH;
     }
 
+    @Override
     public void setData(Serializable obj) throws IOException {
         var outputStream = new FileOutputStream(this.filePath);
         var objectOutputStream = new ObjectOutputStream(outputStream);
@@ -24,6 +25,7 @@ public class FileStorage implements Storage {
         objectOutputStream.close();
     }
 
+    @Override
     public Object getData() throws IOException, ClassNotFoundException {
         var inputStream = new FileInputStream(this.filePath);
         var objectInputStream = new ObjectInputStream(inputStream);
