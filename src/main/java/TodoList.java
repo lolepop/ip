@@ -1,5 +1,8 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import task.InvalidEventDateOrder;
 
 public class TodoList {
     private ArrayList<Task> items;
@@ -19,13 +22,13 @@ public class TodoList {
         return todo;
     }
 
-    public Deadline addDeadline(String description, String by) {
+    public Deadline addDeadline(String description, LocalDateTime by) {
         var deadline = new Deadline(description, by);
         items.add(deadline);
         return deadline;
     }
 
-    public Event addEvent(String description, String from, String to) {
+    public Event addEvent(String description, LocalDateTime from, LocalDateTime to) throws InvalidEventDateOrder {
         var event = new Event(description, from, to);
         items.add(event);
         return event;
