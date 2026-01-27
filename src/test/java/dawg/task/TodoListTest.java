@@ -27,6 +27,16 @@ public class TodoListTest {
     }
 
     @Test
+    public void findItemHaystack_expected_success() {
+        var list = new TodoList(new DummyStorage());
+        list.addTodo("yo wholetoken then some more");
+        list.addTodo("qwertyuiopMESSAGEaskdjalksdjyo");
+        assertTrue(list.findTasks("yo").length() == 2);
+        assertTrue(list.findTasks("MESSAGE").length() == 1);
+        assertTrue(list.findTasks("blah").length() == 0);
+    }
+
+    @Test
     public void markUnmarkItems_expected_success() {
         var list = new TodoList(new DummyStorage());
         list.addTodo("yo");
