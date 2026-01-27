@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
@@ -71,6 +74,17 @@ class ArgParser {
     public Optional<String> getArg(String arg) {
         this.parse();
         return Optional.ofNullable(this.parsedArgs.get(arg));
+    }
+
+    public Optional<LocalDateTime> getDateArg(String arg, String dateTimeFormat) {
+        return this.getArg(arg).flatMap(data -> {
+            try {
+                var fmt = DateTimeFormatter.ofPattern(dateTimeFormat);
+                return Optional.of(LocalDateTime.parse(data, fmt));
+            } catch (DateTimeParseException e) {
+                return Optional.empty();
+            }
+        });
     }
 
 }

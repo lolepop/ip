@@ -4,6 +4,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import storage.FileStorage;
+import task.InvalidEventDateOrder;
 
 class DawgException extends Exception {
     public DawgException(String message) {
@@ -39,6 +40,8 @@ enum Command {
 }
 
 public class Dawg {
+    private static final String PREFERRED_INPUT_DATE_FMT = "yyyy/MM/dd HH:mm";
+
     private static TodoList todoList = new TodoList(new FileStorage());
 
     // returns: if program should continue expecting further commands
@@ -88,19 +91,27 @@ public class Dawg {
                 ap.registerArg("/to");
 
                 Task added;
+
                 Function<String, Supplier<DawgException>> exceptionFactory = s -> () -> new DawgException(
-                        "expected " + s);
-                String description = ap.getUntagged().orElseThrow(exceptionFactory.apply("description"));
+                        "expected valid date (" + Dawg.PREFERRED_INPUT_DATE_FMT + ") " + s);
+                String description = ap.getUntagged().orElseThrow(() -> new DawgException("expected description"));
 
                 if (command == Command.TODO) {
                     added = todoList.addTodo(description);
                 } else if (command == Command.DEADLINE) {
-                    var by = ap.getArg("/by").orElseThrow(exceptionFactory.apply("argument /by"));
+                    var by = ap.getDateArg("/by", Dawg.PREFERRED_INPUT_DATE_FMT)
+                            .orElseThrow(exceptionFactory.apply("argument /by"));
                     added = todoList.addDeadline(description, by);
                 } else {
-                    var from = ap.getArg("/from").orElseThrow(exceptionFactory.apply("argument /from"));
-                    var to = ap.getArg("/to").orElseThrow(exceptionFactory.apply("argument /to"));
-                    added = todoList.addEvent(description, from, to);
+                    var from = ap.getDateArg("/from", Dawg.PREFERRED_INPUT_DATE_FMT)
+                            .orElseThrow(exceptionFactory.apply("argument /from"));
+                    var to = ap.getDateArg("/to", Dawg.PREFERRED_INPUT_DATE_FMT)
+                            .orElseThrow(exceptionFactory.apply("argument /to"));
+                    try {
+                        added = todoList.addEvent(description, from, to);
+                    } catch (InvalidEventDateOrder e) {
+                        throw new DawgException("provided arguments were invalid, " + e.getMessage());
+                    }
                 }
                 System.out.println("Got it. I've added this task:");
                 System.out.println(added);
