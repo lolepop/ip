@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -41,10 +40,11 @@ enum Command {
 }
 
 public class Dawg {
-    private static TodoList todoList = new TodoList(new FileStorage());
+    private TodoList todoList;
+    private Ui ui;
 
     // returns: if program should continue expecting further commands
-    private static boolean executeCommand(String rawCommand) throws DawgException {
+    private boolean executeCommand(String rawCommand) throws DawgException {
         var commandTokeniser = new CommandTokeniser(rawCommand);
         var command = Command.from(commandTokeniser.nextString().orElseThrow());
         if (commandTokeniser.isEmpty()) {
@@ -56,35 +56,35 @@ public class Dawg {
                 return false;
             }
             case LIST -> {
-                System.out.println("Here are the tasks in your list:");
-                System.out.println(todoList.toString());
+                this.ui.displayMessage("Here are the tasks in your list:");
+                this.ui.displayMessage(todoList.toString());
             }
             case MARK -> {
                 var selectedIndex = commandTokeniser.nextInt()
                         .orElseThrow(() -> new DawgException("expected task number"));
                 var task = todoList.markTask(selectedIndex).orElseThrow(() -> new DawgException("invalid task number"));
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println(task);
+                this.ui.displayMessage("Nice! I've marked this task as done:");
+                this.ui.displayMessage(task);
             }
             case UNMARK -> {
                 var selectedIndex = commandTokeniser.nextInt()
                         .orElseThrow(() -> new DawgException("expected task number"));
                 var task = todoList.unmarkTask(selectedIndex)
                         .orElseThrow(() -> new DawgException("invalid task number"));
-                System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println(task);
+                this.ui.displayMessage("OK, I've marked this task as not done yet:");
+                this.ui.displayMessage(task);
             }
             case DELETE -> {
                 var selectedIndex = commandTokeniser.nextInt()
                         .orElseThrow(() -> new DawgException("expected task number"));
                 var task = todoList.removeTask(selectedIndex)
                         .orElseThrow(() -> new DawgException("invalid task number"));
-                System.out.println("Noted. I've removed this task:");
-                System.out.println(task);
-                System.out.println("Now you have " + todoList.length() + " tasks in the list.");
+                this.ui.displayMessage("Noted. I've removed this task:");
+                this.ui.displayMessage(task);
+                this.ui.displayMessage("Now you have " + todoList.length() + " tasks in the list.");
             }
             case EVENT, DEADLINE, TODO -> {
-                var ap = new ArgParser(commandTokeniser);
+                var ap = commandTokeniser.toArgParser();
                 ap.registerArg("/by");
                 ap.registerArg("/from");
                 ap.registerArg("/to");
@@ -112,9 +112,9 @@ public class Dawg {
                         throw new DawgException("provided arguments were invalid, " + e.getMessage());
                     }
                 }
-                System.out.println("Got it. I've added this task:");
-                System.out.println(added);
-                System.out.println("Now you have " + todoList.length() + " tasks in the list.");
+                this.ui.displayMessage("Got it. I've added this task:");
+                this.ui.displayMessage(added);
+                this.ui.displayMessage("Now you have " + todoList.length() + " tasks in the list.");
             }
             case UNKNOWN -> {
                 throw new DawgException("unknown command");
@@ -128,18 +128,25 @@ public class Dawg {
         }
 
         // extra padding for easier reading
-        System.out.println();
+        this.ui.displayMessage();
 
         return true;
     }
 
     public static void main(String[] args) {
-        Scanner stdin = new Scanner(System.in);
+        Dawg dawg = new Dawg();
+        dawg.run();
+    }
 
-        System.out.println("Hello, I'm Dawg\nWhat can I do for you?");
+    public Dawg() {
+        this.ui = new Ui();
+        this.todoList = new TodoList(new FileStorage());
+    }
 
+    public void run() {
+        this.ui.showGreeting();
         while (true) {
-            String rawCommand = stdin.nextLine();
+            String rawCommand = this.ui.nextCommand();
             try {
                 if (!executeCommand(rawCommand)) {
                     break;
@@ -147,13 +154,12 @@ public class Dawg {
             } catch (DawgException e) {
                 // FIXME: the test harness ignores stderr, should the error cases be tested?
                 // the harness can be modified to pipe in stderr but is that allowed?
-                System.err.println(e);
+                this.ui.displayError(e);
             } catch (Exception e) {
-                System.err.println("Warning, unhandled exception bubbled: " + e);
+                this.ui.displayError("Warning, unhandled exception bubbled: " + e);
             }
         }
 
-        System.out.println("Bye. Hope to see you again soon!");
-        stdin.close();
+        this.ui.displayMessage("Bye. Hope to see you again soon!");
     }
 }

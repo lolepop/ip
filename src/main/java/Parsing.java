@@ -114,4 +114,8 @@ class CommandTokeniser {
     public Optional<Integer> nextInt() {
         return this.nextString().map(Integer::parseInt);
     }
+
+    public ArgParser toArgParser() {
+        return new ArgParser(this);
+    }
 }
