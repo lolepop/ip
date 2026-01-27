@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import dawg.storage.DummyStorage;
 import dawg.storage.Storage;
 
 public class TodoList {
@@ -29,6 +30,16 @@ public class TodoList {
             // this is expected, dont panic if we cannot retrieve it
             System.err.println("failed to load existing tasks, starting fresh copy");
         }
+    }
+
+    /**
+     * Create a view within a slice of an existing todo list
+     * 
+     * @param items slice of tasks to have a view over
+     */
+    protected TodoList(ArrayList<Task> items) {
+        this.items = items;
+        this.storage = new DummyStorage();
     }
 
     public void addTask(String description) {
@@ -128,6 +139,18 @@ public class TodoList {
         var task = this.getTaskByIndex(taskIndex);
         task.ifPresent(t -> t.setDone(false));
         return task;
+    }
+
+    /**
+     * Find all tasks containing query
+     * 
+     * @param query search query
+     * @return all tasks containing a query hit
+     */
+    public TodoList findTasks(String query) {
+        var queryResults = this.items.stream().filter(task -> task.getDescription().contains(query))
+                .collect(Collectors.toList());
+        return new TodoList(new ArrayList<>(queryResults));
     }
 
     private Optional<ArrayList<Task>> loadFromStorage() throws ClassNotFoundException, IOException {

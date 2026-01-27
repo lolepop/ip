@@ -5,6 +5,7 @@ import dawg.command.impl.AddEventCommand;
 import dawg.command.impl.AddTodoCommand;
 import dawg.command.impl.ByeCommand;
 import dawg.command.impl.DeleteCommand;
+import dawg.command.impl.FindTaskCommand;
 import dawg.command.impl.ListCommand;
 import dawg.command.impl.MarkCommand;
 import dawg.command.impl.UnknownCommand;
@@ -28,6 +29,7 @@ public abstract class Command {
             case "todo" -> new AddTodoCommand();
             case "deadline" -> new AddDeadlineCommand();
             case "event" -> new AddEventCommand();
+            case "find" -> new FindTaskCommand();
             default -> new UnknownCommand();
         };
     }

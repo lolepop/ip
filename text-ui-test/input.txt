@@ -3,6 +3,7 @@ todo task1
 deadline task 2 2 /by 1000/11/11 10:00    
 event task 3 /from 1000/11/11 10:00 /to 1000/12/25 11:00
 list
+find task 2
 mark 2
 list
 unmark 2
