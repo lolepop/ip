@@ -8,35 +8,35 @@ Got it. I've added this task:
 Now you have 1 tasks in the list.
 
 Got it. I've added this task:
-[D][ ] task 2 2 (by: some time later)
+[D][ ] task 2 2 (by: Nov 11 1000 1000)
 Now you have 2 tasks in the list.
 
 Got it. I've added this task:
-[E][ ] task 3 (from: now to: then)
+[E][ ] task 3 (from: Nov 11 1000 1000 to: Dec 25 1000 1100)
 Now you have 3 tasks in the list.
 
 Here are the tasks in your list:
 1.[T][ ] task1
-2.[D][ ] task 2 2 (by: some time later)
-3.[E][ ] task 3 (from: now to: then)
+2.[D][ ] task 2 2 (by: Nov 11 1000 1000)
+3.[E][ ] task 3 (from: Nov 11 1000 1000 to: Dec 25 1000 1100)
 
 Nice! I've marked this task as done:
-[D][X] task 2 2 (by: some time later)
+[D][X] task 2 2 (by: Nov 11 1000 1000)
 
 Here are the tasks in your list:
 1.[T][ ] task1
-2.[D][X] task 2 2 (by: some time later)
-3.[E][ ] task 3 (from: now to: then)
+2.[D][X] task 2 2 (by: Nov 11 1000 1000)
+3.[E][ ] task 3 (from: Nov 11 1000 1000 to: Dec 25 1000 1100)
 
 OK, I've marked this task as not done yet:
-[D][ ] task 2 2 (by: some time later)
+[D][ ] task 2 2 (by: Nov 11 1000 1000)
 
 Noted. I've removed this task:
-[D][ ] task 2 2 (by: some time later)
+[D][ ] task 2 2 (by: Nov 11 1000 1000)
 Now you have 2 tasks in the list.
 
 Here are the tasks in your list:
 1.[T][ ] task1
-2.[E][ ] task 3 (from: now to: then)
+2.[E][ ] task 3 (from: Nov 11 1000 1000 to: Dec 25 1000 1100)
 
 Bye. Hope to see you again soon!
