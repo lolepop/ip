@@ -18,17 +18,13 @@ class DawgException extends Exception {
 }
 
 enum Command {
-    BYE,
-    LIST,
-    MARK,
-    UNMARK,
-    DELETE,
-    TODO,
-    DEADLINE,
-    EVENT,
-    UNKNOWN;
+    BYE, LIST, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT, UNKNOWN;
 
     public static Command from(String command) {
+        switch (command) {
+            case "asd":
+                break;
+        }
         return switch (command.toLowerCase()) {
             case "bye" -> Command.BYE;
             case "list" -> Command.LIST;
@@ -55,32 +51,33 @@ public class Dawg {
         }
 
         switch (command) {
-            case BYE -> { return false; }
+            case BYE -> {
+                return false;
+            }
             case LIST -> {
                 System.out.println("Here are the tasks in your list:");
                 System.out.println(todoList.toString());
             }
             case MARK -> {
                 var selectedIndex = commandTokeniser.nextInt()
-                    .orElseThrow(() -> new DawgException("expected task number"));
-                var task = todoList.markTask(selectedIndex)
-                    .orElseThrow(() -> new DawgException("invalid task number"));
+                        .orElseThrow(() -> new DawgException("expected task number"));
+                var task = todoList.markTask(selectedIndex).orElseThrow(() -> new DawgException("invalid task number"));
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println(task);
             }
             case UNMARK -> {
                 var selectedIndex = commandTokeniser.nextInt()
-                    .orElseThrow(() -> new DawgException("expected task number"));
+                        .orElseThrow(() -> new DawgException("expected task number"));
                 var task = todoList.unmarkTask(selectedIndex)
-                    .orElseThrow(() -> new DawgException("invalid task number"));
+                        .orElseThrow(() -> new DawgException("invalid task number"));
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println(task);
             }
             case DELETE -> {
                 var selectedIndex = commandTokeniser.nextInt()
-                    .orElseThrow(() -> new DawgException("expected task number"));
+                        .orElseThrow(() -> new DawgException("expected task number"));
                 var task = todoList.removeTask(selectedIndex)
-                    .orElseThrow(() -> new DawgException("invalid task number"));
+                        .orElseThrow(() -> new DawgException("invalid task number"));
                 System.out.println("Noted. I've removed this task:");
                 System.out.println(task);
                 System.out.println("Now you have " + todoList.length() + " tasks in the list.");
@@ -90,9 +87,10 @@ public class Dawg {
                 ap.registerArg("/by");
                 ap.registerArg("/from");
                 ap.registerArg("/to");
-                
+
                 Task added;
-                Function<String, Supplier<DawgException>> exceptionFactory = s -> () -> new DawgException("expected " + s);
+                Function<String, Supplier<DawgException>> exceptionFactory = s -> () -> new DawgException(
+                        "expected " + s);
                 String description = ap.getUntagged().orElseThrow(exceptionFactory.apply("description"));
 
                 if (command == Command.TODO) {
@@ -124,7 +122,7 @@ public class Dawg {
         Scanner stdin = new Scanner(System.in);
 
         System.out.println("Hello, I'm Dawg\nWhat can I do for you?");
-        
+
         while (true) {
             String rawCommand = stdin.nextLine();
             try {
@@ -139,7 +137,7 @@ public class Dawg {
                 System.err.println("Warning, unhandled exception bubbled: " + e);
             }
         }
-        
+
         System.out.println("Bye. Hope to see you again soon!");
         stdin.close();
     }
