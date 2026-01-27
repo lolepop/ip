@@ -1,6 +1,9 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import storage.FileStorage;
 
 class DawgException extends Exception {
     public DawgException(String message) {
@@ -21,10 +24,6 @@ enum Command {
     BYE, LIST, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT, UNKNOWN;
 
     public static Command from(String command) {
-        switch (command) {
-            case "asd":
-                break;
-        }
         return switch (command.toLowerCase()) {
             case "bye" -> Command.BYE;
             case "list" -> Command.LIST;
@@ -40,7 +39,7 @@ enum Command {
 }
 
 public class Dawg {
-    private static TodoList todoList = new TodoList();
+    private static TodoList todoList = new TodoList(new FileStorage());
 
     // returns: if program should continue expecting further commands
     private static boolean executeCommand(String rawCommand) throws DawgException {
@@ -110,6 +109,12 @@ public class Dawg {
             case UNKNOWN -> {
                 throw new DawgException("unknown command");
             }
+        }
+
+        try {
+            todoList.save();
+        } catch (IOException e) {
+            throw new DawgException("Failed to save your tasks: " + e);
         }
 
         // extra padding for easier reading

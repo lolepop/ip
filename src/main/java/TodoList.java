@@ -1,11 +1,26 @@
+import java.io.IOException;
+import java.lang.StackWalker.Option;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import storage.Storage;
 
 public class TodoList {
     private ArrayList<Task> items;
+    private Storage storage;
 
-    public TodoList() {
+    public TodoList(Storage storage) {
         this.items = new ArrayList<>();
+        this.storage = storage;
+
+        try {
+            this.items = this.loadFromStorage().get();
+        } catch (Exception e) {
+            // this is expected, dont panic if we cannot retrieve it
+            System.err.println("failed to load existing tasks, starting fresh copy");
+        }
     }
 
     public void addTask(String description) {
@@ -57,6 +72,19 @@ public class TodoList {
         var task = this.getTaskByIndex(taskIndex);
         task.ifPresent(t -> t.setDone(false));
         return task;
+    }
+
+    private Optional<ArrayList<Task>> loadFromStorage() throws ClassNotFoundException, IOException {
+        var rawData = this.storage.getData();
+        if (rawData instanceof List<?> data) {
+            var list = data.stream().map(Task.class::cast).collect(Collectors.toList());
+            return Optional.of(new ArrayList<>(list));
+        }
+        return Optional.empty();
+    }
+
+    public void save() throws IOException {
+        this.storage.setData(this.items);
     }
 
     @Override
