@@ -59,7 +59,11 @@ public class TodoList {
     }
 
     private Optional<Task> getTaskByIndex(int taskIndex) {
-        return Optional.ofNullable(this.items.get(taskIndex - 1));
+        try {
+            return Optional.of(this.items.get(taskIndex - 1));
+        } catch (IndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
     }
 
     public Optional<Task> markTask(int taskIndex) {

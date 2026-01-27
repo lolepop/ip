@@ -13,6 +13,7 @@ bruh
 deadline /by a
 event this should fail /to qwerty
 delete 9999
+mark 9999
 delete 1
 delete 1
 bye
