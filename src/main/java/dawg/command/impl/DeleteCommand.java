@@ -5,6 +5,9 @@ import dawg.command.DawgException;
 import dawg.command.FlowControl;
 import dawg.command.SharedCommandContext;
 
+/**
+ * Command to delete a task
+ */
 public class DeleteCommand extends Command {
     @Override
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {

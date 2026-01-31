@@ -4,6 +4,9 @@ import dawg.command.DawgException;
 import dawg.command.FlowControl;
 import dawg.command.SharedCommandContext;
 
+/**
+ * Command to find tasks matching a query
+ */
 public class FindTaskCommand extends TaskCommand {
     @Override
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {

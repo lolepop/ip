@@ -16,7 +16,7 @@ public class ArgParser {
     private boolean isParsed;
 
     /**
-     * Create an ArgParser that parse arguments from provided CommandTokeniser
+     * Creates an ArgParser that parse arguments from provided CommandTokeniser
      *
      * @param tokeniser the tokeniser to read tokens from
      */
@@ -28,7 +28,7 @@ public class ArgParser {
     }
 
     /**
-     * Register a valid argument key that the parser should recognise
+     * Registers a valid argument key that the parser should recognise
      *
      * @param arg the argument token to register (e.g. "/by" or "/from")
      */
@@ -79,7 +79,7 @@ public class ArgParser {
     }
 
     /**
-     * Get the "untagged" parameter: tokens that appeared before any recognised arg
+     * Gets the "untagged" parameter: tokens that appeared before any recognised arg
      *
      * @return the untagged parameter (if present)
      */
@@ -89,7 +89,7 @@ public class ArgParser {
     }
 
     /**
-     * Get the parameter associated with one registered argument
+     * Gets the parameter associated with one registered argument
      *
      * @param arg the registered argument token to retrieve the parameter for
      * @return the argument's parameter string (if present)
@@ -100,7 +100,7 @@ public class ArgParser {
     }
 
     /**
-     * Get a Date parameter associated with one registered argument
+     * Gets a Date parameter associated with one registered argument
      *
      * @param arg the registered argument token to retrieve the parameter for
      * @return the argument's parameter LocalDateTime (if present and parseable)

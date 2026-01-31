@@ -8,6 +8,9 @@ import dawg.command.SharedCommandContext;
 import dawg.task.Constants;
 import dawg.task.Task;
 
+/**
+ * Command to add a task to the todo list
+ */
 public abstract class TaskCommand extends Command {
     protected void displayCommon(SharedCommandContext ctx, Task added) {
         ctx.ui.displayMessage("Got it. I've added this task:");

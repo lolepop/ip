@@ -5,6 +5,9 @@ import dawg.command.FlowControl;
 import dawg.command.SharedCommandContext;
 import dawg.task.Task;
 
+/**
+ * Command to add a todo task
+ */
 public class AddTodoCommand extends TaskCommand {
     @Override
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {

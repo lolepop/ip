@@ -4,6 +4,9 @@ import dawg.parsing.CommandTokeniser;
 import dawg.task.TodoList;
 import dawg.ui.Ui;
 
+/**
+ * Environment shared by all commands
+ */
 public class SharedCommandContext {
     public String rawCommand;
     public CommandTokeniser commandTokeniser;

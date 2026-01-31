@@ -2,12 +2,15 @@ package dawg.task;
 
 import java.io.Serializable;
 
+/**
+ * Base Task that emcompasses items capable of being stored in the todo list
+ */
 public class Task implements Serializable {
     protected String description;
     protected boolean isDone;
 
     /**
-     * Base Task that emcompasses items capable of being stored in the todo list
+     * Creates a new Task
      * 
      * @param description main description of the task
      */
@@ -17,7 +20,7 @@ public class Task implements Serializable {
     }
 
     /**
-     * Get visual marker indicating done-ness of the Task
+     * Gets visual marker indicating done-ness of the Task
      * 
      * @return status marker indicating if task is done
      */
@@ -34,7 +37,7 @@ public class Task implements Serializable {
     }
 
     /**
-     * Check if this task is completed
+     * Checks if this task is completed
      * 
      * @return completion status
      */
@@ -43,7 +46,7 @@ public class Task implements Serializable {
     }
 
     /**
-     * Set or mark the status as isDone
+     * Changes the status of the task
      * 
      * @param isDone the new status of the Task
      */

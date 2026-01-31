@@ -3,6 +3,9 @@ package dawg.storage;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * Object storage
+ */
 public interface Storage {
     /**
      * Overrides object within the target file (if it exists)

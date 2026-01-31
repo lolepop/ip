@@ -7,6 +7,9 @@ import dawg.task.Constants;
 import dawg.task.InvalidEventDateOrder;
 import dawg.task.Task;
 
+/**
+ * Command to add a event task
+ */
 public class AddEventCommand extends TaskCommand {
     @Override
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {

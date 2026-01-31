@@ -5,6 +5,9 @@ import dawg.command.DawgException;
 import dawg.command.FlowControl;
 import dawg.command.SharedCommandContext;
 
+/**
+ * Command to mark a task as done
+ */
 public class MarkCommand extends Command {
     @Override
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {

@@ -7,7 +7,7 @@ public class CommandTokeniser {
     int parsingIndex;
 
     /**
-     * Create a CommandTokeniser from a raw command string.
+     * Creates a CommandTokeniser from a raw command string.
      *
      * @param rawCommand the raw user command (may be empty or contain only
      *                   whitespace)
@@ -18,7 +18,7 @@ public class CommandTokeniser {
     }
 
     /**
-     * Check if provided command was empty
+     * Checks if provided command was empty
      *
      * @return true if there are no meaningful tokens
      */
@@ -27,7 +27,7 @@ public class CommandTokeniser {
     }
 
     /**
-     * Check if there are more tokens available to read
+     * Checks if there are more tokens available to read
      *
      * @return true if a subsequent call to retrieve next token will return
      *         something
@@ -37,7 +37,7 @@ public class CommandTokeniser {
     }
 
     /**
-     * Get the next token
+     * Gets the next token
      *
      * @return next token (if any)
      */
@@ -46,7 +46,7 @@ public class CommandTokeniser {
     }
 
     /**
-     * Get the next integer token
+     * Gets the next integer token
      *
      * @return next token (nothing if not a valid int)
      */
@@ -55,7 +55,7 @@ public class CommandTokeniser {
     }
 
     /**
-     * Create an ArgParser bound to this tokeniser.
+     * Creates an ArgParser bound to this tokeniser.
      *
      * @return an ArgParser that parses arguments from this tokeniser
      */

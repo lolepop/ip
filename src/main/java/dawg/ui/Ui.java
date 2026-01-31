@@ -2,6 +2,9 @@ package dawg.ui;
 
 import java.util.Scanner;
 
+/**
+ * Provides user-facing frontend
+ */
 public class Ui {
     private Scanner stdin;
 
@@ -17,7 +20,7 @@ public class Ui {
     }
 
     /**
-     * Get the next raw command entered by user
+     * Gets the next raw command entered by user
      * 
      * @return next raw command
      */

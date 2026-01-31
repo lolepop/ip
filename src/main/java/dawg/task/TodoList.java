@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 import dawg.storage.DummyStorage;
 import dawg.storage.Storage;
 
+/**
+ * Encapsulates a list of tasks and operations on them
+ */
 public class TodoList {
     private ArrayList<Task> items;
     private Storage storage;
@@ -33,7 +36,7 @@ public class TodoList {
     }
 
     /**
-     * Create a view within a slice of an existing todo list
+     * Creates a view within a slice of an existing todo list
      * 
      * @param items slice of tasks to have a view over
      */
@@ -96,7 +99,7 @@ public class TodoList {
     }
 
     /**
-     * Remove task at at specified index
+     * Removes task at at specified index
      * 
      * @param taskIndex 1-indexed task reference to delete
      * @return task that was removed (if successful)
@@ -118,7 +121,7 @@ public class TodoList {
     }
 
     /**
-     * Mark task at at specified index
+     * Marks task at at specified index
      * 
      * @param taskIndex 1-indexed task reference to mark
      * @return task that was marked (if successful)
@@ -130,7 +133,7 @@ public class TodoList {
     }
 
     /**
-     * Unmark task at at specified index
+     * Unmarks task at at specified index
      * 
      * @param taskIndex 1-indexed task reference to unmark
      * @return task that was unmarked (if successful)
@@ -142,7 +145,7 @@ public class TodoList {
     }
 
     /**
-     * Find all tasks containing query
+     * Finds all tasks containing query
      * 
      * @param query search query
      * @return all tasks containing a query hit
@@ -163,7 +166,7 @@ public class TodoList {
     }
 
     /**
-     * Save the full list into storage
+     * Saves the full list into storage
      * 
      * @throws IOException failed to write to storage
      */

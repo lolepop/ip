@@ -7,8 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * Object output into files
+ */
 public class FileStorage implements Storage {
-    // File file;
     private static final String FILE_PATH = "./tasks.txt";
     private String filePath; // so that this may be extended to use a config system if necessary
 

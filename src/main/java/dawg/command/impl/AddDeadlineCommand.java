@@ -6,6 +6,9 @@ import dawg.command.SharedCommandContext;
 import dawg.task.Constants;
 import dawg.task.Task;
 
+/**
+ * Command to add a deadline task
+ */
 public class AddDeadlineCommand extends TaskCommand {
     @Override
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {

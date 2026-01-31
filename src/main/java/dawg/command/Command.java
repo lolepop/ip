@@ -11,9 +11,12 @@ import dawg.command.impl.MarkCommand;
 import dawg.command.impl.UnknownCommand;
 import dawg.command.impl.UnmarkCommand;
 
+/**
+ * Base command which is inherited by all other commands
+ */
 public abstract class Command {
     /**
-     * Convert raw string commands into their respective commands
+     * Converts raw string commands into their respective commands
      * 
      * @param command first part of a raw command by the user (e.g. in "mark 1", the
      *                function expects "mark" to be passed)
@@ -35,7 +38,7 @@ public abstract class Command {
     }
 
     /**
-     * Execute the command given the following ctx
+     * Executes the command given the following ctx
      * 
      * @param ctx shared execution environment of the command, contains everything
      *            all commands need to run
