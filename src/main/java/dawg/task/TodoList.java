@@ -45,11 +45,6 @@ public class TodoList {
         this.storage = new DummyStorage();
     }
 
-    public void addTask(String description) {
-        var task = new Task(description);
-        items.add(task);
-    }
-
     /**
      * Adds a todo to the list
      * 

@@ -42,7 +42,7 @@ public class CommandTokeniserTest {
     }
 
     @Test
-    public void testConstructor_trims_leading_and_trailing_spaces() {
+    public void testConstructor_trimsSpaces_success() {
         CommandTokeniser t = new CommandTokeniser("   alpha beta   ");
         assertEquals("alpha", t.nextString().orElseThrow());
         assertEquals("beta", t.nextString().orElseThrow());

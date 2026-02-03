@@ -2,6 +2,10 @@ package dawg.storage;
 
 import java.io.Serializable;
 
+/**
+ * No operation storage backend, used for testing or when we don't want the
+ * object to be placed anywhere
+ */
 public class DummyStorage implements Storage {
     private Object storedData;
 

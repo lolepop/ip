@@ -3,10 +3,21 @@ package dawg.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Event variant Task, contains a start and end date
+ */
 public class Event extends Task {
-    LocalDateTime from;
-    LocalDateTime to;
+    private LocalDateTime from;
+    private LocalDateTime to;
 
+    /**
+     * Constructs an Event
+     * 
+     * @param description task description
+     * @param from        start date
+     * @param to          end date
+     * @throws InvalidEventDateOrder if date of "to" comes before "from"
+     */
     public Event(String description, LocalDateTime from, LocalDateTime to) throws InvalidEventDateOrder {
         super(description);
         this.from = from;

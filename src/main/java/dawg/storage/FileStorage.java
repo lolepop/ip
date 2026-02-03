@@ -35,5 +35,4 @@ public class FileStorage implements Storage {
         objectInputStream.close();
         return obj;
     }
-
 }

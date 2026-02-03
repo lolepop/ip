@@ -1,5 +1,8 @@
 package dawg.command;
 
+/**
+ * Generic error indicator used for UI display purposes
+ */
 public class DawgException extends Exception {
     public DawgException(String message) {
         super(message);

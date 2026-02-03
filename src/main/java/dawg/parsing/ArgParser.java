@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
 
+/**
+ * Handles parsing of user arguments from a tokeniser
+ */
 public class ArgParser {
     private CommandTokeniser tokeniser;
     private String untagged; // part argument not belonging to any particular arg
@@ -115,5 +118,4 @@ public class ArgParser {
             }
         });
     }
-
 }

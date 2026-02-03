@@ -2,9 +2,12 @@ package dawg.parsing;
 
 import java.util.Optional;
 
+/**
+ * Take in a raw user command and tokenises it for consumption
+ */
 public class CommandTokeniser {
-    String[] parts; // raw segments of a command
-    int parsingIndex;
+    private String[] parts; // raw segments of a command
+    private int parsingIndex;
 
     /**
      * Creates a CommandTokeniser from a raw command string.

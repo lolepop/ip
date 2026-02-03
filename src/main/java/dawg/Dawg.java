@@ -11,9 +11,20 @@ import dawg.storage.FileStorage;
 import dawg.task.TodoList;
 import dawg.ui.Ui;
 
+/**
+ * Main class of the chatbot encompassing all of its state
+ */
 public class Dawg {
     private TodoList todoList;
     private Ui ui;
+
+    /**
+     * Initialises chatbot's default state
+     */
+    public Dawg() {
+        this.ui = new Ui();
+        this.todoList = new TodoList(new FileStorage());
+    }
 
     // returns: if program should continue expecting further commands
     private boolean executeCommand(String rawCommand) throws DawgException {
@@ -41,16 +52,9 @@ public class Dawg {
         return true;
     }
 
-    public static void main(String[] args) {
-        Dawg dawg = new Dawg();
-        dawg.run();
-    }
-
-    public Dawg() {
-        this.ui = new Ui();
-        this.todoList = new TodoList(new FileStorage());
-    }
-
+    /**
+     * Event loop of the chatbot, exits when the bot decides to terminate
+     */
     public void run() {
         this.ui.showGreeting();
         while (true) {
@@ -69,5 +73,15 @@ public class Dawg {
         }
 
         this.ui.displayMessage("Bye. Hope to see you again soon!");
+    }
+
+    /**
+     * Initialises and runs the chatbot
+     * 
+     * @param args ununsed
+     */
+    public static void main(String[] args) {
+        Dawg dawg = new Dawg();
+        dawg.run();
     }
 }
