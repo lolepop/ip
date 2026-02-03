@@ -1,15 +1,13 @@
 package dawg.ui;
 
-import java.util.Scanner;
-
 /**
  * Provides user-facing frontend
  */
 public class Ui {
-    private Scanner stdin;
+    private UiController controller;
 
-    public Ui() {
-        this.stdin = new Scanner(System.in);
+    public Ui(UiController controller) {
+        this.controller = controller;
     }
 
     /**
@@ -20,29 +18,20 @@ public class Ui {
     }
 
     /**
-     * Gets the next raw command entered by user
-     * 
-     * @return next raw command
+     * Displays goodbye message
      */
-    public String nextCommand() {
-        return this.stdin.nextLine();
+    public void showGoodbye() {
+        this.displayMessage("Bye. Hope to see you again soon!");
     }
 
     /**
-     * Displays msg to the user
+     * Displays msg to the user, separated by linebreaks
      * 
-     * @param msg to be shown
+     * @param msgs to be shown
      */
-    public void displayMessage(String msg) {
-        System.out.println(msg);
-    }
-
-    public void displayMessage(Object obj) {
-        this.displayMessage(obj.toString());
-    }
-
-    public void displayMessage() {
-        System.out.println("");
+    public void displayMessage(String... msgs) {
+        var formattedMsg = String.join("\n", msgs);
+        this.controller.onBotReply(formattedMsg);
     }
 
     /**
@@ -51,10 +40,10 @@ public class Ui {
      * @param err error message to be shown
      */
     public void displayError(String err) {
-        System.err.println(err);
+        this.displayMessage(err);
     }
 
     public void displayError(Object obj) {
-        System.err.println(obj.toString());
+        this.displayMessage(obj.toString());
     }
 }
