@@ -21,6 +21,12 @@ public class MessageDialogBubble extends HBox {
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * Creates a new message dialog bubble component
+     * 
+     * @param text what an actor said
+     * @param img  the actor's avatar
+     */
     public MessageDialogBubble(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainChatScene.class.getResource("/view/MessageDialogBubble.fxml"));
@@ -42,10 +48,25 @@ public class MessageDialogBubble extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
+    /**
+     * Creates a dialog bubble component with the user variant
+     * 
+     * @param text what an actor said
+     * @param img  the actor's avatar
+     * @return the component
+     */
     public static MessageDialogBubble getUserDialog(String text, Image img) {
         return new MessageDialogBubble(text, img);
     }
 
+    /**
+     * Creates a dialog bubble component with the bot variant (the opposite
+     * direction)
+     * 
+     * @param text what an actor said
+     * @param img  the actor's avatar
+     * @return the component
+     */
     public static MessageDialogBubble geBotDialog(String text, Image img) {
         var db = MessageDialogBubble.getUserDialog(text, img);
         db.flip();
