@@ -13,8 +13,7 @@ public class DeleteCommand extends Command {
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {
         var selectedIndex = ctx.commandTokeniser.nextInt().orElseThrow(() -> new DawgException("expected task number"));
         var task = ctx.todoList.removeTask(selectedIndex).orElseThrow(() -> new DawgException("invalid task number"));
-        ctx.ui.displayMessage("Noted. I've removed this task:");
-        ctx.ui.displayMessage(task);
+        ctx.ui.displayMessage("Noted. I've removed this task:", task.toString());
         ctx.ui.displayMessage("Now you have " + ctx.todoList.length() + " tasks in the list.");
         return super.execute(ctx);
     }

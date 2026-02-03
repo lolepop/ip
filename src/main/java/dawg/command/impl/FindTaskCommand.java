@@ -13,8 +13,7 @@ public class FindTaskCommand extends TaskCommand {
         var ap = ctx.commandTokeniser.toArgParser();
         String query = ap.getUntagged().orElseThrow(() -> new DawgException("expected query"));
         var queryResults = ctx.todoList.findTasks(query);
-        ctx.ui.displayMessage("Here are the matching tasks in your list:");
-        ctx.ui.displayMessage(queryResults);
+        ctx.ui.displayMessage("Here are the matching tasks in your list:", queryResults.toString());
         return super.execute(ctx);
     }
 }

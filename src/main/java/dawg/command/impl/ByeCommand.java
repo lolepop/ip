@@ -11,6 +11,7 @@ import dawg.command.SharedCommandContext;
 public class ByeCommand extends Command {
     @Override
     public FlowControl execute(SharedCommandContext context) throws DawgException {
+        context.ui.showGoodbye();
         return FlowControl.Break;
     }
 }
