@@ -19,25 +19,27 @@ public class Dawg {
     private Ui ui;
 
     /**
-     * Initialises chatbot's default state
+     * Creates a new chatbot
+     * 
+     * @param ui the surface to display our output to
      */
-    public Dawg() {
-        this.ui = new Ui();
+    public Dawg(Ui ui) {
+        this.ui = ui;
         this.todoList = new TodoList(new FileStorage());
     }
 
     // returns: if program should continue expecting further commands
-    private boolean executeCommand(String rawCommand) throws DawgException {
+    private FlowControl executeCommand(String rawCommand) throws DawgException {
         var commandTokeniser = new CommandTokeniser(rawCommand);
         var command = Command.from(commandTokeniser.nextString().orElseThrow());
         if (commandTokeniser.isEmpty()) {
-            return true;
+            return FlowControl.Continue;
         }
 
         FlowControl ret = command
                 .execute(new SharedCommandContext(this.ui, this.todoList, rawCommand, commandTokeniser));
         if (ret == FlowControl.Break) {
-            return false;
+            return FlowControl.Break;
         }
 
         try {
@@ -46,42 +48,30 @@ public class Dawg {
             throw new DawgException("Failed to save your tasks: " + e);
         }
 
-        // extra padding for easier reading
-        this.ui.displayMessage();
-
-        return true;
+        return FlowControl.Continue;
     }
 
     /**
-     * Event loop of the chatbot, exits when the bot decides to terminate
-     */
-    public void run() {
-        this.ui.showGreeting();
-        while (true) {
-            String rawCommand = this.ui.nextCommand();
-            try {
-                if (!executeCommand(rawCommand)) {
-                    break;
-                }
-            } catch (DawgException e) {
-                // FIXME: the test harness ignores stderr, should the error cases be tested?
-                // the harness can be modified to pipe in stderr but is that allowed?
-                this.ui.displayError(e);
-            } catch (Exception e) {
-                this.ui.displayError("Warning, unhandled exception bubbled: " + e);
-            }
-        }
-
-        this.ui.displayMessage("Bye. Hope to see you again soon!");
-    }
-
-    /**
-     * Initialises and runs the chatbot
+     * Runs a rawCommand and handles any internal faults, then outputs to ui
      * 
-     * @param args ununsed
+     * @param rawCommand raw command provided by the user to be run
+     * @return application termination status
      */
-    public static void main(String[] args) {
-        Dawg dawg = new Dawg();
-        dawg.run();
+    public FlowControl run(String rawCommand) {
+        try {
+            return this.executeCommand(rawCommand);
+        } catch (DawgException e) {
+            this.ui.displayError(e);
+        } catch (Exception e) {
+            System.err.println("Warning, unhandled exception bubbled: " + e);
+        }
+        return FlowControl.Continue;
+    }
+
+    /**
+     * Handles first launch itinerary: greeting
+     */
+    public void onFirstLaunch() {
+        this.ui.showGreeting();
     }
 }

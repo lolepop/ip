@@ -13,8 +13,7 @@ import dawg.task.Task;
  */
 public abstract class TaskCommand extends Command {
     protected void displayCommon(SharedCommandContext ctx, Task added) {
-        ctx.ui.displayMessage("Got it. I've added this task:");
-        ctx.ui.displayMessage(added);
+        ctx.ui.displayMessage("Got it. I've added this task:", added.toString());
         ctx.ui.displayMessage("Now you have " + ctx.todoList.length() + " tasks in the list.");
     }
 
