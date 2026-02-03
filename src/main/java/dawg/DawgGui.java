@@ -17,7 +17,6 @@ public class DawgGui extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Dawg");
-        stage.setResizable(false);
 
         FXMLLoader fxmlLoader = new FXMLLoader(Dawg.class.getResource("/view/MainChatScene.fxml"));
         AnchorPane ap = fxmlLoader.load();
