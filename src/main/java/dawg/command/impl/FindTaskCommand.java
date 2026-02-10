@@ -7,7 +7,7 @@ import dawg.command.SharedCommandContext;
 /**
  * Command to find tasks matching a query
  */
-public class FindTaskCommand extends TaskCommand {
+public class FindTaskCommand extends AddTaskCommand {
     @Override
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {
         var ap = ctx.commandTokeniser.toArgParser();

@@ -10,7 +10,7 @@ import dawg.task.Task;
 /**
  * Command to add an event task
  */
-public class AddEventCommand extends TaskCommand {
+public class AddEventCommand extends AddTaskCommand {
     @Override
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {
         var ap = ctx.commandTokeniser.toArgParser();
@@ -22,9 +22,12 @@ public class AddEventCommand extends TaskCommand {
                 .orElseThrow(super.argExceptionFactory("argument /from"));
         var to = ap.getDateArg("/to", Constants.INPUT_DATE_FORMAT)
                 .orElseThrow(super.argExceptionFactory("argument /to"));
+
+        var snapshot = ctx.todoList.takeSnapshot();
         try {
             Task added = ctx.todoList.addEvent(description, from, to);
             super.displayCommon(ctx, added);
+            super.addToHistory(ctx, snapshot, "event", added);
         } catch (InvalidEventDateOrder e) {
             throw new DawgException("provided arguments were invalid, " + e.getMessage());
         }

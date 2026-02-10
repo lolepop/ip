@@ -178,6 +178,26 @@ public class TodoList {
         this.storage.setData(this.items);
     }
 
+    /**
+     * Clones (deeply) the current list of items
+     * 
+     * @return the cloned list
+     */
+    public TodoList takeSnapshot() {
+        var clonedItems = this.items.stream().map(Task::new).collect(Collectors.toList());
+        return new TodoList(new ArrayList<>(clonedItems));
+    }
+
+    /**
+     * Restores a previous version from another saved todolist
+     * 
+     * @param todoList the list to restore with
+     */
+    public void revertSnapshot(TodoList todoList) {
+        assert todoList != null;
+        this.items = todoList.items;
+    }
+
     @Override
     public String toString() {
         var sb = new StringBuilder();

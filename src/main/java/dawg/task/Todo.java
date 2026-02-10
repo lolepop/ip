@@ -13,6 +13,15 @@ public class Todo extends Task {
         super(description);
     }
 
+    /**
+     * Copy constructor
+     * 
+     * @param t object to copy from
+     */
+    public Todo(Todo t) {
+        super(t);
+    }
+
     @Override
     public String toString() {
         return "[T]" + super.toString();

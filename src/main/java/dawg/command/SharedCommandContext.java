@@ -13,6 +13,7 @@ public class SharedCommandContext {
     public CommandTokeniser commandTokeniser;
     public Ui ui;
     public TodoList todoList;
+    public HistoryProvider history;
     // CHECKSTYLE OFF: VisibilityModifier
 
     /**
@@ -20,13 +21,16 @@ public class SharedCommandContext {
      * 
      * @param ui               UI to display to
      * @param todoList         target TodoList to read/write
+     * @param history          where to place history of mutation actions
      * @param rawCommand       user's raw input
      * @param commandTokeniser parses rawCommand
      */
-    public SharedCommandContext(Ui ui, TodoList todoList, String rawCommand, CommandTokeniser commandTokeniser) {
+    public SharedCommandContext(Ui ui, TodoList todoList, HistoryProvider history, String rawCommand,
+            CommandTokeniser commandTokeniser) {
         this.rawCommand = rawCommand;
         this.commandTokeniser = commandTokeniser;
         this.ui = ui;
         this.todoList = todoList;
+        this.history = history;
     }
 }

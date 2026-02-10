@@ -20,6 +20,16 @@ public class Task implements Serializable {
     }
 
     /**
+     * Copy constructor
+     * 
+     * @param t object to copy from
+     */
+    public Task(Task t) {
+        this.description = t.description;
+        this.isDone = t.isDone;
+    }
+
+    /**
      * Gets visual marker indicating done-ness of the Task
      * 
      * @return status marker indicating if task is done

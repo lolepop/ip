@@ -5,6 +5,7 @@ import java.io.IOException;
 import dawg.command.Command;
 import dawg.command.DawgException;
 import dawg.command.FlowControl;
+import dawg.command.HistoryProvider;
 import dawg.command.SharedCommandContext;
 import dawg.parsing.CommandTokeniser;
 import dawg.storage.FileStorage;
@@ -15,8 +16,11 @@ import dawg.ui.Ui;
  * Main class of the chatbot encompassing all of its state
  */
 public class Dawg {
+    private static final int HISTORY_MAX_RECORDS = 50;
+
     private TodoList todoList;
     private Ui ui;
+    private HistoryProvider history;
 
     /**
      * Creates a new chatbot
@@ -27,6 +31,7 @@ public class Dawg {
         assert ui != null;
         this.ui = ui;
         this.todoList = new TodoList(new FileStorage());
+        this.history = new HistoryProvider(Dawg.HISTORY_MAX_RECORDS);
     }
 
     // returns: if program should continue expecting further commands
@@ -38,7 +43,7 @@ public class Dawg {
         }
 
         FlowControl ret = command
-                .execute(new SharedCommandContext(this.ui, this.todoList, rawCommand, commandTokeniser));
+                .execute(new SharedCommandContext(this.ui, this.todoList, this.history, rawCommand, commandTokeniser));
         if (ret == FlowControl.Break) {
             return FlowControl.Break;
         }

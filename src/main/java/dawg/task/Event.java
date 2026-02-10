@@ -28,6 +28,17 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Copy constructor
+     * 
+     * @param e object to copy from
+     */
+    public Event(Event e) {
+        super(e);
+        this.from = e.from;
+        this.to = e.to;
+    }
+
     private boolean isInvalidDateRange() {
         return this.to.isBefore(this.from);
     }

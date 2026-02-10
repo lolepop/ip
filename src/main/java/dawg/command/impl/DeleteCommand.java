@@ -3,6 +3,7 @@ package dawg.command.impl;
 import dawg.command.Command;
 import dawg.command.DawgException;
 import dawg.command.FlowControl;
+import dawg.command.HistorySnapshot;
 import dawg.command.SharedCommandContext;
 
 /**
@@ -12,9 +13,14 @@ public class DeleteCommand extends Command {
     @Override
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {
         var selectedIndex = ctx.commandTokeniser.nextInt().orElseThrow(() -> new DawgException("expected task number"));
+
+        var snapshot = ctx.todoList.takeSnapshot();
+
         var task = ctx.todoList.removeTask(selectedIndex).orElseThrow(() -> new DawgException("invalid task number"));
         ctx.ui.displayMessage("Noted. I've removed this task:", task.toString());
         ctx.ui.displayMessage("Now you have " + ctx.todoList.length() + " tasks in the list.");
+
+        ctx.history.pushHistory(new HistorySnapshot("removed from list: " + task.getDescription(), snapshot));
         return super.execute(ctx);
     }
 }

@@ -20,6 +20,16 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    /**
+     * Copy constructor
+     * 
+     * @param d object to copy from
+     */
+    public Deadline(Deadline d) {
+        super(d);
+        this.by = d.by;
+    }
+
     @Override
     public String toString() {
         var fmt = DateTimeFormatter.ofPattern(Constants.OUTPUT_DATE_FORMAT);
