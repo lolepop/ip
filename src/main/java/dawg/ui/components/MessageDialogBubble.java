@@ -67,7 +67,7 @@ public class MessageDialogBubble extends HBox {
      * @param img  the actor's avatar
      * @return the component
      */
-    public static MessageDialogBubble geBotDialog(String text, Image img) {
+    public static MessageDialogBubble getBotDialog(String text, Image img) {
         var db = MessageDialogBubble.getUserDialog(text, img);
         db.flip();
         return db;

@@ -30,6 +30,8 @@ dependencies {
 }
 
 test {
+    enableAssertions = true
+    
     useJUnitPlatform()
 
     testLogging {
@@ -56,6 +58,7 @@ shadowJar {
     archiveClassifier = null
 }
 
-run{
+run {
     standardInput = System.in
+    enableAssertions = true
 }
