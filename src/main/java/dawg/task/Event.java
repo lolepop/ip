@@ -22,9 +22,14 @@ public class Event extends Task {
         super(description);
         this.from = from;
         this.to = to;
-        if (to.isBefore(from)) {
+
+        if (this.isInvalidDateRange()) {
             throw new InvalidEventDateOrder();
         }
+    }
+
+    private boolean isInvalidDateRange() {
+        return this.to.isBefore(this.from);
     }
 
     @Override

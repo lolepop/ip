@@ -26,13 +26,7 @@ public class TodoList {
     public TodoList(Storage storage) {
         this.items = new ArrayList<>();
         this.storage = storage;
-
-        try {
-            this.items = this.loadFromStorage().get();
-        } catch (Exception e) {
-            // this is expected, dont panic if we cannot retrieve it
-            System.err.println("failed to load existing tasks, starting fresh copy");
-        }
+        this.loadItemsFromStorage();
     }
 
     /**
@@ -55,6 +49,15 @@ public class TodoList {
         var todo = new Todo(description);
         items.add(todo);
         return todo;
+    }
+
+    private void loadItemsFromStorage() {
+        try {
+            this.items = this.loadFromStorage().get();
+        } catch (Exception e) {
+            // this is expected, dont panic if we cannot retrieve it
+            System.err.println("failed to load existing tasks, starting fresh copy");
+        }
     }
 
     /**
@@ -93,6 +96,10 @@ public class TodoList {
         return this.items.size();
     }
 
+    private int taskIndexToRealIndex(int taskIndex) {
+        return taskIndex - 1;
+    }
+
     /**
      * Removes task at at specified index
      * 
@@ -101,7 +108,8 @@ public class TodoList {
      */
     public Optional<Task> removeTask(int taskIndex) {
         try {
-            return Optional.of(this.items.remove(taskIndex - 1));
+            int index = this.taskIndexToRealIndex(taskIndex);
+            return Optional.of(this.items.remove(index));
         } catch (IndexOutOfBoundsException e) {
             return Optional.empty();
         }
@@ -109,7 +117,8 @@ public class TodoList {
 
     private Optional<Task> getTaskByIndex(int taskIndex) {
         try {
-            return Optional.of(this.items.get(taskIndex - 1));
+            int index = this.taskIndexToRealIndex(taskIndex);
+            return Optional.of(this.items.get(index));
         } catch (IndexOutOfBoundsException e) {
             return Optional.empty();
         }
@@ -173,9 +182,11 @@ public class TodoList {
     public String toString() {
         var sb = new StringBuilder();
         for (int i = 1; i <= this.items.size(); i++) {
-            var todo = this.items.get(i - 1);
+            var todo = this.getTaskByIndex(i).get();
             sb.append(i + "." + todo + "\n");
         }
+
+        // remove trailing newline
         return sb.toString().strip();
     }
 }
