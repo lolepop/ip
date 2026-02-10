@@ -44,6 +44,7 @@ public class MainChatScene extends AnchorPane implements UiController {
      * @param d the handler used
      */
     public void setDawg(Dawg d) {
+        assert d != null;
         this.dawg = d;
         if (!this.isInitialised) {
             d.onFirstLaunch();
@@ -53,6 +54,7 @@ public class MainChatScene extends AnchorPane implements UiController {
 
     @FXML
     private void handleUserInput() {
+        assert this.isInitialised;
         String userRawCommand = this.userInput.getText();
 
         this.userInput.clear();
@@ -76,6 +78,6 @@ public class MainChatScene extends AnchorPane implements UiController {
 
     @Override
     public void onBotReply(String response) {
-        this.dialogContainer.getChildren().add(MessageDialogBubble.geBotDialog(response, this.botImage));
+        this.dialogContainer.getChildren().add(MessageDialogBubble.getBotDialog(response, this.botImage));
     }
 }

@@ -7,6 +7,7 @@ public class Ui {
     private UiController controller;
 
     public Ui(UiController controller) {
+        assert controller != null;
         this.controller = controller;
     }
 

@@ -24,6 +24,7 @@ public class ArgParser {
      * @param tokeniser the tokeniser to read tokens from
      */
     public ArgParser(CommandTokeniser tokeniser) {
+        assert tokeniser != null;
         this.tokeniser = tokeniser;
         this.parsedArgs = new HashMap<>();
         this.args = new HashSet<>();
@@ -36,6 +37,7 @@ public class ArgParser {
      * @param arg the argument token to register (e.g. "/by" or "/from")
      */
     public void registerArg(String arg) {
+        assert arg != null && arg.length() > 0;
         this.args.add(arg);
     }
 
@@ -105,6 +107,7 @@ public class ArgParser {
      * @return the argument's parameter string (if present)
      */
     public Optional<String> getArg(String arg) {
+        assert arg != null && arg.length() > 0;
         this.parse();
         return Optional.ofNullable(this.parsedArgs.get(arg));
     }
@@ -125,6 +128,7 @@ public class ArgParser {
      * @return the argument's parameter LocalDateTime (if present and parseable)
      */
     public Optional<LocalDateTime> getDateArg(String arg, String dateTimeFormat) {
+        assert dateTimeFormat != null && dateTimeFormat.length() > 0;
         return this.getArg(arg).flatMap(data -> this.tryFormatDate(dateTimeFormat, data));
     }
 }

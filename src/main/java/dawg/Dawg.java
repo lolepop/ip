@@ -24,6 +24,7 @@ public class Dawg {
      * @param ui the surface to display our output to
      */
     public Dawg(Ui ui) {
+        assert ui != null;
         this.ui = ui;
         this.todoList = new TodoList(new FileStorage());
     }
