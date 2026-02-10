@@ -39,8 +39,8 @@
 
     <!-- Required to allow exceptions in code style -->
     <module name="SuppressionCommentFilter">
-      <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
-      <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)"/>
+      <property name="offCommentFormat" value="\s*CHECKSTYLE.OFF\:\s*([\w\|]+)"/>
+      <property name="onCommentFormat" value="\s*CHECKSTYLE.ON\:\s*([\w\|]+)"/>
       <property name="checkFormat" value="$1"/>
     </module>
 

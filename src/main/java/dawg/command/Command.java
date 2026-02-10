@@ -23,6 +23,7 @@ public abstract class Command {
      * @return the corresponding Command
      */
     public static Command from(String command) {
+        // CHECKSTYLE OFF: Indentation
         return switch (command.toLowerCase()) {
             case "bye" -> new ByeCommand();
             case "list" -> new ListCommand();
@@ -35,6 +36,7 @@ public abstract class Command {
             case "find" -> new FindTaskCommand();
             default -> new UnknownCommand();
         };
+        // CHECKSTYLE ON: Indentation
     }
 
     /**

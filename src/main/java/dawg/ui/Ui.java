@@ -6,6 +6,12 @@ package dawg.ui;
 public class Ui {
     private UiController controller;
 
+    /**
+     * Creates a new UI management object. Communicates with the actual UI
+     * controller layer provided
+     * 
+     * @param controller frontend physical renderer
+     */
     public Ui(UiController controller) {
         assert controller != null;
         this.controller = controller;

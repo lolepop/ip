@@ -8,10 +8,12 @@ import dawg.ui.Ui;
  * Environment shared by all commands
  */
 public class SharedCommandContext {
+    // CHECKSTYLE OFF: VisibilityModifier
     public String rawCommand;
     public CommandTokeniser commandTokeniser;
     public Ui ui;
     public TodoList todoList;
+    // CHECKSTYLE OFF: VisibilityModifier
 
     /**
      * Constructs a data class to be shared by all command execution environments
