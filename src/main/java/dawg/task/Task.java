@@ -3,7 +3,7 @@ package dawg.task;
 import java.io.Serializable;
 
 /**
- * Base Task that emcompasses items capable of being stored in the todo list
+ * Base Task that encompasses items capable of being stored in the todo list
  */
 public class Task implements Serializable {
     protected String description;

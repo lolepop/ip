@@ -8,7 +8,7 @@ import dawg.task.InvalidEventDateOrder;
 import dawg.task.Task;
 
 /**
- * Command to add a event task
+ * Command to add an event task
  */
 public class AddEventCommand extends TaskCommand {
     @Override

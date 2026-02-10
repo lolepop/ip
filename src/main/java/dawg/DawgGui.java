@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * Actually create the scene to be shown to the use
+ * Actually create the scene to be shown to the user
  */
 public class DawgGui extends Application {
     private Scene scene;
