@@ -35,7 +35,7 @@ public class MainChatScene extends AnchorPane implements UiController {
 
     @FXML
     public void initialize() {
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        this.scrollPane.vvalueProperty().bind(this.dialogContainer.heightProperty());
     }
 
     /**
@@ -53,13 +53,22 @@ public class MainChatScene extends AnchorPane implements UiController {
 
     @FXML
     private void handleUserInput() {
-        String userRawCommand = userInput.getText();
+        String userRawCommand = this.userInput.getText();
+
+        this.userInput.clear();
         if (userRawCommand.trim().length() == 0) {
             return;
         }
 
-        dialogContainer.getChildren().add(MessageDialogBubble.getUserDialog(userRawCommand, userImage));
-        userInput.clear();
+        this.displayUserChatBubble(userRawCommand);
+        this.requestBotReply(userRawCommand);
+    }
+
+    private void displayUserChatBubble(String message) {
+        this.dialogContainer.getChildren().add(MessageDialogBubble.getUserDialog(message, this.userImage));
+    }
+
+    private void requestBotReply(String userRawCommand) {
         if (this.dawg.run(userRawCommand) == FlowControl.Break) {
             Platform.exit();
         }
@@ -67,6 +76,6 @@ public class MainChatScene extends AnchorPane implements UiController {
 
     @Override
     public void onBotReply(String response) {
-        dialogContainer.getChildren().add(MessageDialogBubble.geBotDialog(response, botImage));
+        this.dialogContainer.getChildren().add(MessageDialogBubble.geBotDialog(response, this.botImage));
     }
 }

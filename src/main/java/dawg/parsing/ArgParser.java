@@ -41,44 +41,51 @@ public class ArgParser {
 
     // consume remaining tokens to get our args
     private void parse() {
-        // ignore if was ran before
-        if (this.isParsed) {
+        if (!this.shouldParse()) {
             return;
         }
-        this.isParsed = true;
 
         String currentArg = null;
-        var buffer = new StringBuffer();
+        var buffer = new StringBuilder();
         while (this.tokeniser.hasMoreTokens()) {
             var tok = this.tokeniser.nextString().get();
             if (this.args.contains(tok)) {
-                // flush buffer
-                var param = buffer.toString().strip();
-                if (buffer.length() > 0) {
-                    if (currentArg == null) {
-                        // not belonging to any arg
-                        this.untagged = param;
-                    } else {
-                        this.parsedArgs.put(currentArg, param);
-                    }
-                }
+                this.flushBuffer(buffer, currentArg);
                 currentArg = tok;
-                buffer.setLength(0);
             } else {
                 buffer.append(tok);
                 buffer.append(" ");
             }
         }
 
-        // flush buffer again on exit
+        // add any remaining tokens to avoid accidental truncation
+        this.flushBuffer(buffer, currentArg);
+    }
+
+    private void flushBuffer(StringBuilder buffer, String currentArg) {
         var param = buffer.toString().strip();
-        if (buffer.length() > 0) {
-            if (currentArg == null) {
-                this.untagged = param;
-            } else {
-                this.parsedArgs.put(currentArg, param);
-            }
+        if (buffer.length() == 0) {
+            return;
         }
+
+        if (currentArg == null) {
+            // not belonging to any arg
+            this.untagged = param;
+        } else {
+            this.parsedArgs.put(currentArg, param);
+        }
+
+        // reset buffer, avoid duplication of tokens
+        buffer.setLength(0);
+    }
+
+    private boolean shouldParse() {
+        // ignore if was ran before
+        if (this.isParsed) {
+            return false;
+        }
+        this.isParsed = true;
+        return true;
     }
 
     /**
@@ -102,6 +109,15 @@ public class ArgParser {
         return Optional.ofNullable(this.parsedArgs.get(arg));
     }
 
+    private Optional<LocalDateTime> tryFormatDate(String dateTimeFormat, String rawDate) {
+        try {
+            var fmt = DateTimeFormatter.ofPattern(dateTimeFormat);
+            return Optional.of(LocalDateTime.parse(rawDate, fmt));
+        } catch (DateTimeParseException e) {
+            return Optional.empty();
+        }
+    }
+
     /**
      * Gets a Date parameter associated with one registered argument
      *
@@ -109,13 +125,6 @@ public class ArgParser {
      * @return the argument's parameter LocalDateTime (if present and parseable)
      */
     public Optional<LocalDateTime> getDateArg(String arg, String dateTimeFormat) {
-        return this.getArg(arg).flatMap(data -> {
-            try {
-                var fmt = DateTimeFormatter.ofPattern(dateTimeFormat);
-                return Optional.of(LocalDateTime.parse(data, fmt));
-            } catch (DateTimeParseException e) {
-                return Optional.empty();
-            }
-        });
+        return this.getArg(arg).flatMap(data -> this.tryFormatDate(dateTimeFormat, data));
     }
 }
