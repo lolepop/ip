@@ -31,6 +31,11 @@ public class Deadline extends Task {
     }
 
     @Override
+    public Deadline clone() {
+        return new Deadline(this);
+    }
+
+    @Override
     public String toString() {
         var fmt = DateTimeFormatter.ofPattern(Constants.OUTPUT_DATE_FORMAT);
         return "[D]" + super.toString() + " (by: " + this.by.format(fmt) + ")";

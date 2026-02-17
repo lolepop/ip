@@ -14,12 +14,13 @@ public class UnmarkCommand extends Command {
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {
         var selectedIndex = ctx.commandTokeniser.nextInt().orElseThrow(() -> new DawgException("expected task number"));
 
-        var snapshot = ctx.todoList.takeSnapshot();
+        var snapshot = HistorySnapshot.ofEmpty(ctx.todoList);
 
         var task = ctx.todoList.unmarkTask(selectedIndex).orElseThrow(() -> new DawgException("invalid task number"));
         ctx.ui.displayMessage("OK, I've marked this task as not done yet:", task.toString());
 
-        ctx.history.pushHistory(new HistorySnapshot("marked: " + task.getDescription(), snapshot));
+        snapshot.setDescription("marked: " + task.getDescription());
+        ctx.history.pushHistory(snapshot);
         return super.execute(ctx);
     }
 }

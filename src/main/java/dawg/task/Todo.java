@@ -23,6 +23,11 @@ public class Todo extends Task {
     }
 
     @Override
+    public Todo clone() {
+        return new Todo(this);
+    }
+
+    @Override
     public String toString() {
         return "[T]" + super.toString();
     }

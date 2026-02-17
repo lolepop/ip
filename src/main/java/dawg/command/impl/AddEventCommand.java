@@ -2,6 +2,7 @@ package dawg.command.impl;
 
 import dawg.command.DawgException;
 import dawg.command.FlowControl;
+import dawg.command.HistorySnapshot;
 import dawg.command.SharedCommandContext;
 import dawg.task.Constants;
 import dawg.task.InvalidEventDateOrder;
@@ -23,7 +24,7 @@ public class AddEventCommand extends AddTaskCommand {
         var to = ap.getDateArg("/to", Constants.INPUT_DATE_FORMAT)
                 .orElseThrow(super.argExceptionFactory("argument /to"));
 
-        var snapshot = ctx.todoList.takeSnapshot();
+        var snapshot = HistorySnapshot.ofEmpty(ctx.todoList);
         try {
             Task added = ctx.todoList.addEvent(description, from, to);
             super.displayCommon(ctx, added);

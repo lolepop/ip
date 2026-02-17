@@ -29,6 +29,7 @@ public class HistoryProvider {
      * @param record the record to save
      */
     public void pushHistory(HistorySnapshot record) {
+        assert record.getDescription() != null;
         this.history.add(record);
         this.truncateExcessHistory();
     }

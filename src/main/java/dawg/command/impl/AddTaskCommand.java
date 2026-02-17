@@ -8,7 +8,6 @@ import dawg.command.HistorySnapshot;
 import dawg.command.SharedCommandContext;
 import dawg.task.Constants;
 import dawg.task.Task;
-import dawg.task.TodoList;
 
 /**
  * Command to add a task to the todo list
@@ -23,9 +22,10 @@ public abstract class AddTaskCommand extends Command {
         return () -> new DawgException("expected valid date (" + Constants.INPUT_DATE_FORMAT + ") " + arg);
     }
 
-    protected void addToHistory(SharedCommandContext ctx, TodoList prevSnapshot, String variant, Task added) {
+    protected void addToHistory(SharedCommandContext ctx, HistorySnapshot snapshot, String variant, Task added) {
         var description = "added " + variant + ": " + added.getDescription();
-        var snapshot = new HistorySnapshot(description, prevSnapshot);
+        // var snapshot = new HistorySnapshot(description, prevSnapshot);
+        snapshot.setDescription(description);
         ctx.history.pushHistory(snapshot);
     }
 }

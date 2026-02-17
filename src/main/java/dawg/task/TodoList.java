@@ -7,13 +7,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import dawg.command.Snapshot;
+import dawg.command.SnapshotData;
 import dawg.storage.DummyStorage;
 import dawg.storage.Storage;
 
 /**
  * Encapsulates a list of tasks and operations on them
  */
-public class TodoList {
+public class TodoList implements Snapshot, SnapshotData {
     private ArrayList<Task> items;
     private Storage storage;
 
@@ -178,24 +180,16 @@ public class TodoList {
         this.storage.setData(this.items);
     }
 
-    /**
-     * Clones (deeply) the current list of items
-     * 
-     * @return the cloned list
-     */
+    @Override
     public TodoList takeSnapshot() {
-        var clonedItems = this.items.stream().map(Task::new).collect(Collectors.toList());
+        var clonedItems = this.items.stream().map(t -> t.clone()).collect(Collectors.toList());
         return new TodoList(new ArrayList<>(clonedItems));
     }
 
-    /**
-     * Restores a previous version from another saved todolist
-     * 
-     * @param todoList the list to restore with
-     */
-    public void revertSnapshot(TodoList todoList) {
-        assert todoList != null;
-        this.items = todoList.items;
+    @Override
+    public void revertSnapshot(SnapshotData todoList) {
+        assert todoList != null && todoList instanceof TodoList;
+        this.items = ((TodoList) todoList).items;
     }
 
     @Override
