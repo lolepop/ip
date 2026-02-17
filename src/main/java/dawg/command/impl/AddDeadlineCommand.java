@@ -2,6 +2,7 @@ package dawg.command.impl;
 
 import dawg.command.DawgException;
 import dawg.command.FlowControl;
+import dawg.command.HistorySnapshot;
 import dawg.command.SharedCommandContext;
 import dawg.task.Constants;
 import dawg.task.Task;
@@ -15,7 +16,7 @@ public class AddDeadlineCommand extends AddTaskCommand {
         var ap = ctx.commandTokeniser.toArgParser();
         ap.registerArg("/by");
 
-        var snapshot = ctx.todoList.takeSnapshot();
+        var snapshot = HistorySnapshot.ofEmpty(ctx.todoList);
 
         String description = ap.getUntagged().orElseThrow(() -> new DawgException("expected description"));
         var by = ap.getDateArg("/by", Constants.INPUT_DATE_FORMAT)

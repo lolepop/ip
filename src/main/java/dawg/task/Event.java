@@ -44,6 +44,11 @@ public class Event extends Task {
     }
 
     @Override
+    public Event clone() {
+        return new Event(this);
+    }
+
+    @Override
     public String toString() {
         var fmt = DateTimeFormatter.ofPattern(Constants.OUTPUT_DATE_FORMAT);
         return "[E]" + super.toString() + " (from: " + this.from.format(fmt) + " to: " + this.to.format(fmt) + ")";

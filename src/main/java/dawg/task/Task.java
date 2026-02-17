@@ -64,6 +64,16 @@ public class Task implements Serializable {
         this.isDone = isDone;
     }
 
+    /**
+     * Clones this object. Avoids issue with copy constructor not obeying
+     * polymorphism.
+     * 
+     * @return cloned object
+     */
+    public Task clone() {
+        return new Task(this);
+    }
+
     @Override
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.getDescription();
