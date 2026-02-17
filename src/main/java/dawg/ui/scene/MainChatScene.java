@@ -39,7 +39,7 @@ public class MainChatScene extends AnchorPane implements UiController {
     }
 
     /**
-     * Inject the main logic handler
+     * Injects the main logic handler
      * 
      * @param d the handler used
      */
@@ -71,7 +71,7 @@ public class MainChatScene extends AnchorPane implements UiController {
     }
 
     private void requestBotReply(String userRawCommand) {
-        if (this.dawg.run(userRawCommand) == FlowControl.Break) {
+        if (this.dawg.run(userRawCommand) == FlowControl.BREAK) {
             Platform.exit();
         }
     }

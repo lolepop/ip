@@ -19,7 +19,7 @@ public class UnmarkCommand extends Command {
         var task = ctx.todoList.unmarkTask(selectedIndex).orElseThrow(() -> new DawgException("invalid task number"));
         ctx.ui.displayMessage("OK, I've marked this task as not done yet:", task.toString());
 
-        snapshot.setDescription("marked: " + task.getDescription());
+        snapshot.setDescription("unmarked: " + task.getDescription());
         ctx.history.pushHistory(snapshot);
         return super.execute(ctx);
     }

@@ -41,6 +41,9 @@ public class HistorySnapshot {
         this.description = description;
     }
 
+    /**
+     * Restores the saved snapshot into the original reference object
+     */
     public void restore() {
         this.originator.revertSnapshot(this.snapshot);
     }

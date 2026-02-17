@@ -53,6 +53,6 @@ public abstract class Command {
      * @throws DawgException user-facing error message
      */
     public FlowControl execute(SharedCommandContext ctx) throws DawgException {
-        return FlowControl.Continue;
+        return FlowControl.CONTINUE;
     }
 }

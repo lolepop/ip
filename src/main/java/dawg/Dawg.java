@@ -39,13 +39,13 @@ public class Dawg {
         var commandTokeniser = new CommandTokeniser(rawCommand);
         var command = Command.from(commandTokeniser.nextString().orElseThrow());
         if (commandTokeniser.isEmpty()) {
-            return FlowControl.Continue;
+            return FlowControl.CONTINUE;
         }
 
         FlowControl ret = command
                 .execute(new SharedCommandContext(this.ui, this.todoList, this.history, rawCommand, commandTokeniser));
-        if (ret == FlowControl.Break) {
-            return FlowControl.Break;
+        if (ret == FlowControl.BREAK) {
+            return FlowControl.BREAK;
         }
 
         try {
@@ -54,7 +54,7 @@ public class Dawg {
             throw new DawgException("Failed to save your tasks: " + e);
         }
 
-        return FlowControl.Continue;
+        return FlowControl.CONTINUE;
     }
 
     /**
@@ -71,7 +71,7 @@ public class Dawg {
         } catch (Exception e) {
             System.err.println("Warning, unhandled exception bubbled: " + e);
         }
-        return FlowControl.Continue;
+        return FlowControl.CONTINUE;
     }
 
     /**
